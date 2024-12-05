@@ -10,9 +10,20 @@
 <body>
   <header>
     <h1>Foro FCC</h1>
+    <div id="search-bar">
+      <input type="text" id="search-input" placeholder="Buscar publicaciones...">
+      <select id="type-filter">
+        <option value="">Todos</option>
+        <option value="foro">Foro</option>
+        <option value="anuncio">Anuncio</option>
+      </select>
+      <button id="search-btn">Buscar</button>
+    </div>
+    <button id="login-btn">Log In</button>
     <button id="new-post-btn">+ Subir Publicación</button>
   </header>
-
+  
+  
   <main>
     <section id="posts-container">
       <!-- Publicaciones cargadas dinámicamente -->
@@ -24,10 +35,39 @@
       </section>
     </aside>
   </main>
-
+  
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-login-modal" class="close">&times;</span>
+      <h2>Iniciar Sesión o Registrarse</h2>
+      <div id="login-register">
+        <button id="show-login">Iniciar Sesión</button>
+        <button id="show-register">Registrarse</button>
+      </div>
+      <form id="login-form" style="display:none;">
+        <label for="login-username">Nombre</label>
+        <input type="text" id="login-username" required>
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <form id="register-form" style="display:none;">
+        <label for="register-name">Nombre</label>
+        <input type="text" id="register-name" required>
+        <label for="register-email">Correo</label>
+        <input type="email" id="register-email" required>
+        <label for="register-password">Contraseña</label>
+        <input type="password" id="register-password" required>
+        <button type="submit">Registrarse</button>
+      </form>
+  </div>
+</div>
   <!-- Modal para nueva publicación -->
   <div id="post-modal" class="modal">
     <div class="modal-content">
+      <!-- CANVAS -->
+      <canvas id="post-animation" width="300" height="150"></canvas>
+      
       <span id="close-modal" class="close">&times;</span>
       <h2>Crear Nueva Publicación</h2>
       <form id="post-form" enctype="multipart/form-data">
@@ -47,6 +87,12 @@
     </div>
   </div>
 
+  
+  <canvas id="canvas"></canvas>
+  <script src="canvas.js"></script>
   <script src="script.js"></script>
+  
+  
+
 </body>
 </html>
