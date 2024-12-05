@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foro FCC</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
+</head>
+<body>
+  <header>
+    <h1>Foro FCC</h1>
+    <button id="new-post-btn">+ Subir Publicación</button>
+  </header>
+
+  <main>
+    <section id="posts-container">
+      <!-- Publicaciones cargadas dinámicamente -->
+    </section>
+    <aside>
+      <h3>Anuncios</h3>
+      <section id="ads-container">
+        <!-- Anuncios cargados dinámicamente -->
+      </section>
+    </aside>
+  </main>
+
+  <!-- Modal para nueva publicación -->
+  <div id="post-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <h2>Crear Nueva Publicación</h2>
+      <form id="post-form" enctype="multipart/form-data">
+        <label for="post-type">Tipo de Publicación</label>
+        <select id="post-type" name="post-type" required>
+          <option value="foro">Foro</option>
+          <option value="anuncio">Anuncio</option>
+        </select>
+        <label for="post-title">Título</label>
+        <input type="text" id="post-title" name="post-title" required>
+        <label for="post-content">Contenido</label>
+        <textarea id="post-content" name="post-content" required></textarea>
+        <label for="postImage">Subir Imagen</label>
+        <input type="file" id="postImage" name="postImage" accept="image/*">
+        <button type="submit">Publicar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
