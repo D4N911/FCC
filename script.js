@@ -13,14 +13,20 @@ const showLogin = document.getElementById("show-login");
 const showRegister = document.getElementById("show-register");
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
+let isLoggedIn = false; // Por defecto no logeado
 
 //AJAX
 const searchInput = document.getElementById("search-input");
 const typeFilter = document.getElementById("type-filter");
 const searchBtn = document.getElementById("search-btn");
 
+
 // Abrir modal para nueva publicación
 newPostBtn.addEventListener("click", () => {
+    if (!isLoggedIn) {
+        alert("Debes iniciar sesión para subir una publicación.");
+        return;
+    }
     postModal.style.display = "flex";
 });
 
@@ -46,11 +52,65 @@ loginBtn.addEventListener("click", () => {
     loginForm.style.display = "block";
     registerForm.style.display = "none";
   });
-  //mostrar registro
+  
   showRegister.addEventListener("click", () => {
     loginForm.style.display = "none";
     registerForm.style.display = "block";
   });
+  
+  // Manejo del envío del formulario de registro
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("register-name").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value.trim();
+  
+    fetch("register.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        // Si se desea, luego de registrarse exitosamente, pasamos a la pantalla de login
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+        registerForm.reset();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(err => console.error("Error en registro:", err));
+  });
+  
+  // Manejo del envío del formulario de login
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("login-username").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+  
+    fetch("login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        // Opcional: Cerrar el modal al iniciar sesión exitosamente
+        loginModal.style.display = "none";
+        isLoggedIn = true; // Usuario ahora está logeado
+        loginForm.reset();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(err => console.error("Error en login:", err));
+  });
+  
 
 // Función para agregar publicación al contenedor
 function addPostToPage(postType, title, content, imagePath = null, id = null, votes = 0) {
